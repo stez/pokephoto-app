@@ -16,28 +16,30 @@ const PokemonDetail = (props: PokemonProps) => {
     <div>
         <AppBar />
         <div className='relative min-h-screen flex mt-14'> 
-          <div className="w-64 bg-pokemon-primary p-4 content-center">
+          <div className="flex flex-col items-center w-64 bg-pokemon-primary p-4 content-center">
             <div>
               <Image src={props.pokemon.sprites.other['official-artwork'].front_default} height={150} width={150} alt="Pokemon Logo" />
             </div>
-            <div className=' text-white font-bold'>
+            <div className=' text-white text-xl font-bold pt-4'>
               {props.pokemon.name.toUpperCase()}
             </div>
+            <div className="flex flex-row items-start">
             {props.pokemon.types.map((type) => 
               (
-                <div key={type.type.name} className="m-8 text-pokemon-dark font-bold">
-                  {type.type.name.toUpperCase()}
-                  <Image src={'/types/'+type.type.name+'.svg'} height={70} width={70} alt="Pokemon Logo" />
-
+                <div key={type.type.name} className='m-2'>
+                  <Image src={'/types/'+type.type.name+'.svg'} height={40} width={40} alt="Type Image" title={type.type.name} />
                 </div>
               )
+              
             )}
+            </div>
           </div>
           <div className="flex-1 flex-col p-5 content-center">
-            <div> 
-              {/* <Image src={"/backgrounds/1.jpg"} layout="responsive" height={200} width={600} alt="Pokemon Logo" /> */}
-              <Image src={props.pokemon.sprites.versions['generation-v']['black-white'].animated.front_default} height={70} width={70} alt="Pokemon Logo" />
-            </div>
+
+            <p className='ml-4 p-2 text-bold text-pokemon-dark text-5xl underline'>
+              Stats
+              <Image src={props.pokemon.sprites.versions['generation-v']['black-white'].animated.front_default} height={100} width={100} alt="Pokemon Animated Image" />
+            </p>
             {props.pokemon.stats.map((stat) => 
               (
                 <div key={stat.stat.name} className="m-8 text-pokemon-dark font-bold">
@@ -58,7 +60,7 @@ const PokemonDetail = (props: PokemonProps) => {
 export async function getStaticPaths() {
   return {
     paths: [{ params: { id: '1' } }, { params: { id: '5' } }],
-    fallback: 'blocking', // can also be true or 'blocking'
+    fallback: 'blocking', 
   }
 }
 
