@@ -1,5 +1,5 @@
 import Image from "next/image"
-import loadingPic from '../../public/pikachu.gif'
+import loadingPic from '../public/pikachu.gif'
 
 export default function Progbar() {
   return (

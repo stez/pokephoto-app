@@ -7,7 +7,7 @@ async function getPokemons(limit: number): Promise<PokemonWrapper[]>{
         .then((data) => data.results.map((el: Pokemon) => (new PokemonWrapper(el))))
 }
 
-async function getPokemon(id: number): Promise<PokemonWrapper[]>{
+async function getPokemon(id: number): Promise<PokemonWrapper>{
     return fetch('https://pokeapi.co/api/v2/pokemon/'+id)
         .then((res) => res.json())
 }

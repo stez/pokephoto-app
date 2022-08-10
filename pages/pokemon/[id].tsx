@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
-import AppBar from '../components/appbar'
-import { PokemonWrapper } from "../models/pokemonwrapper"
-import { getPokemon } from "../repositories/pokemonRepository";
+import AppBar from '../../components/appbar'
+import { PokemonWrapper } from "../../models/pokemonwrapper"
+import { getPokemon } from "../../repositories/pokemonRepository";
 import Image from 'next/image';
+import AppHead from '../../components/apphead';
 
 type PokemonProps = {
   pokemon: PokemonWrapper
@@ -11,14 +12,15 @@ type PokemonProps = {
 const PokemonDetail = (props: PokemonProps) => {
   const router = useRouter()
   const { id } = router.query
- debugger
+
   return (
     <div>
+        <AppHead />
         <AppBar />
         <div className='relative min-h-screen flex mt-14'> 
           <div className="flex flex-col items-center w-64 bg-pokemon-primary p-4 content-center">
             <div>
-              <Image src={props.pokemon.sprites.other['official-artwork'].front_default} height={150} width={150} alt="Pokemon Logo" />
+              <Image src={props.pokemon.sprites.other['official-artwork'].front_default} height={180} width={180} alt="Pokemon Logo" />
             </div>
             <div className=' text-white text-xl font-bold pt-4'>
               {props.pokemon.name.toUpperCase()}
@@ -35,7 +37,6 @@ const PokemonDetail = (props: PokemonProps) => {
             </div>
           </div>
           <div className="flex-1 flex-col p-5 content-center">
-
             <p className='ml-4 p-2 text-bold text-pokemon-dark text-5xl underline'>
               Stats
               <Image src={props.pokemon.sprites.versions['generation-v']['black-white'].animated.front_default} height={100} width={100} alt="Pokemon Animated Image" />

@@ -1,9 +1,10 @@
-import { PokemonWrapper } from "./models/pokemonwrapper";
-import { getPokemons } from "./repositories/pokemonRepository";
+import { PokemonWrapper } from "../models/pokemonwrapper";
+import { getPokemons } from "../repositories/pokemonRepository";
 import React, { useState, useEffect } from 'react';
-import PokemonCard from "./components/pokemoncard";
-import AppBar from "./components/appbar";
-import Progbar from "./components/progbar";
+import PokemonCard from "../components/pokemoncard";
+import AppBar from "../components/appbar";
+import Progbar from "../components/progbar";
+import AppHead from "../components/apphead";
 
 function PokemonList() {
     const [data, setData] = useState([] as PokemonWrapper[])
@@ -19,6 +20,7 @@ function PokemonList() {
 
     if (isLoading) return (
       <div>
+        <AppHead />
         <Progbar />
         <AppBar />
         <div className="flex flex-wrap bg-pokemon-primary mt-14 h-screen">
@@ -28,6 +30,7 @@ function PokemonList() {
 
     return (
       <div>
+        <AppHead />
         <AppBar />
         <div className="flex flex-wrap bg-pokemon-primary mt-14">
           {data.map((pokemon) => (
