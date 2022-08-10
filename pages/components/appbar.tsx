@@ -8,7 +8,7 @@ export default function AppBar() {
             <Link href={"/"}>
             <div className="flex items-center hover:cursor-pointer">
                 <Image src="/pokemon-logo.png" height={40} width={120} className="h-6" alt="Pokemon Logo" />
-                <span className="ml-4 self-center text-xl font-semibold whitespace-nowrap text-white"> PhotoApp</span>
+                <span className="ml-4 self-center text-2xl font-extrabold whitespace-nowrap text-white"> PhotoApp</span>
             </div>
             </Link>
             <div className="flex md:order-2">
