@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
 import AppBar from '../../components/appbar'
 import { PokemonWrapper } from "../../models/pokemonwrapper"
-import { getPokemon } from "../../repositories/pokemonRepository";
-import Image from 'next/image';
-import AppHead from '../../components/apphead';
+import { getPokemon, getPokemons } from "../../repositories/pokemonRepository"
+import Image from 'next/image'
+import AppHead from '../../components/apphead'
+import { getArtworkUrl } from "../../models/utils"
 
 type PokemonProps = {
   pokemon: PokemonWrapper
@@ -11,7 +12,19 @@ type PokemonProps = {
 
 const PokemonDetail = (props: PokemonProps) => {
   const router = useRouter()
-  const { id } = router.query
+  const id = router.query.id as string
+
+  let immagineAnimata
+
+  if (props.pokemon.sprites.versions['generation-v']['black-white'].animated.front_default !== null) {
+    immagineAnimata = (
+      <Image src={props.pokemon.sprites.versions['generation-v']['black-white'].animated.front_default} height={100} width={100} alt="Pokemon Animated Image" />
+    );
+  } else {
+    immagineAnimata = (
+      <div></div>
+    );
+  }
 
   return (
     <div>
@@ -20,7 +33,7 @@ const PokemonDetail = (props: PokemonProps) => {
         <div className='relative min-h-screen flex mt-14'> 
           <div className="flex flex-col items-center w-64 bg-pokemon-primary p-4 content-center">
             <div>
-              <Image src={props.pokemon.sprites.other['official-artwork'].front_default} height={180} width={180} alt="Pokemon Logo" />
+              <Image src={getArtworkUrl(id)} height={180} width={180} alt="Pokemon Logo" />
             </div>
             <div className=' text-white text-xl font-bold pt-4'>
               {props.pokemon.name.toUpperCase()}
@@ -39,7 +52,7 @@ const PokemonDetail = (props: PokemonProps) => {
           <div className="flex-1 flex-col p-5 content-center">
             <p className='ml-4 p-2 text-bold text-pokemon-dark text-5xl underline'>
               Stats
-              <Image src={props.pokemon.sprites.versions['generation-v']['black-white'].animated.front_default} height={100} width={100} alt="Pokemon Animated Image" />
+              {immagineAnimata}
             </p>
             {props.pokemon.stats.map((stat) => 
               (
@@ -59,10 +72,11 @@ const PokemonDetail = (props: PokemonProps) => {
 }
 
 export async function getStaticPaths() {
-  return {
-    paths: [{ params: { id: '1' } }, { params: { id: '5' } }],
-    fallback: 'blocking', 
-  }
+  let data = await getPokemons(1500)
+  const paths = data.map((el) => ({
+    params: { id: el.id },
+  }))
+  return { paths, fallback: false }
 }
 
 type NextGetStaticPropsCtx = {
