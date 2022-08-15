@@ -1,5 +1,5 @@
 import { Pokemon } from "./pokemon";
-import { getArtworkUrl } from "./utils"
+import { getArtworkUrl } from "../models/utils"
 
 type PokemonStat = {
     base_stat: number,

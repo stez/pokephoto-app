@@ -1,39 +1,20 @@
-import { PokemonWrapper } from "../models/pokemonwrapper";
 import { getPokemons } from "../repositories/pokemonRepository";
-import React, { useState, useEffect } from 'react';
 import PokemonCard from "../components/pokemoncard";
 import AppBar from "../components/appbar";
-import Progbar from "../components/progbar";
 import AppHead from "../components/apphead";
+import { PokemonWrapper } from "../models/pokemonwrapper";
 
-function PokemonList() {
-    const [data, setData] = useState([] as PokemonWrapper[])
-    const [isLoading, setLoading] = useState(true)
+type PokemonListProps = {
+  pokemons: PokemonWrapper[]
+}
 
-    useEffect(() => {
-      getPokemons(1500)
-        .then((data) => {
-          setData(data)
-          setLoading(false)
-        })
-    }, [])
-
-    if (isLoading) return (
-      <div>
-        <AppHead />
-        <Progbar />
-        <AppBar />
-        <div className="flex flex-wrap bg-pokemon-primary mt-14 h-screen">
-        </div>
-      </div>
-    )
-
+const PokemonList = (props: PokemonListProps) => {
     return (
       <div>
         <AppHead />
         <AppBar />
         <div className="flex flex-wrap bg-pokemon-primary mt-14">
-          {data.map((pokemon) => (
+          {props.pokemons.map((pokemon) => (
             <PokemonCard  key={pokemon.id} pokemon={pokemon} />
           ))}
         </div>
@@ -41,6 +22,17 @@ function PokemonList() {
       
     )
   }
+
+export async function getStaticProps() {
+  const data = await getPokemons(2000)
+  const pokemons = JSON.parse(JSON.stringify(data))
+
+  return {
+    props: {
+      pokemons,
+    },
+  }
+}
 
 export default PokemonList
   
