@@ -1,4 +1,5 @@
 import { Pokemon } from "./pokemon";
+import { getArtworkUrl } from "../models/utils"
 
 type PokemonStat = {
     base_stat: number,
@@ -42,7 +43,7 @@ export class PokemonWrapper {
     constructor(pokemon: Pokemon){
         this.name = pokemon.name
         this.id = pokemon.url.split("/").reverse()[1]
-        this.image = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+this.id+'.png'
+        this.image = getArtworkUrl(this.id)
         this.stats = []
         this.types = []
         this.sprites = {
